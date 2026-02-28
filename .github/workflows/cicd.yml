@@ -36,7 +36,7 @@ jobs:
 
     - name: Build & Push Frontend
       run: |
-        docker build -t cloud-frontend ./frontend
+        docker build -t cloud-frontend ./client
         docker tag cloud-frontend:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cloud-frontend:latest
         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cloud-frontend:latest
 
