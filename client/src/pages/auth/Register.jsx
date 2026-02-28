@@ -43,7 +43,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post("http://localhost:5001/api/register", data);
+      const res = await axios.post("http://localhost:5000/api/register", data);
 
       console.log(res.data);
       toast.success(res.data);
