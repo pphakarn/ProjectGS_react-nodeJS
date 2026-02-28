@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -13,18 +13,7 @@ spec:
         app: backend
     spec:
       containers:
-      - name: backend
-        image: 207717182806.dkr.ecr.ap-southeast-1.amazonaws.com/cloud-backend:v2
-
-        env:
-        - name: DATABASE_URL
-          value: mysql://admin:awd486S5@database-1.cliu62ai6o1e.ap-southeast-1.rds.amazonaws.com:3306/mysql
-
-        ports:
-        - containerPort: 3000
-
-        resources:
-          requests:
-            cpu: "100m"
-          limits:
-            cpu: "500m"
+        - name: backend
+          image: 207717182806.dkr.ecr.ap-southeast-2.amazonaws.com/cloud-backend:latest
+          ports:
+            - containerPort: 5000 # หรือ port ที่ backend ของคุณใช้
