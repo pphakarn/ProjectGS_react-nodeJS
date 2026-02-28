@@ -52,6 +52,6 @@ app.get("/", (req, res) => {
   res.send("Backend OK");
 });
 
-app.listen(5000, () => {
-  console.log('Backend running on port 5000');
+app.listen(process.env.PORT || 5000, () => {
+  console.log('Backend running on port ' + (process.env.PORT || 5000));
 });
