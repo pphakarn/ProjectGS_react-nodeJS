@@ -30,7 +30,7 @@ jobs:
 
     - name: Build & Push Backend
       run: |
-        docker build -t cloud-backend ./backend
+        docker build -t cloud-backend ./server
         docker tag cloud-backend:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cloud-backend:latest
         docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cloud-backend:latest
 
