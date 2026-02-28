@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -28,8 +29,8 @@ model User {
   carts     Cart[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  @@map("user")
 }
-
 model Product {
   id          Int              @id @default(autoincrement())
   title       String
@@ -44,8 +45,8 @@ model Product {
   updatedAt   DateTime         @updatedAt
   category    Category?        @relation(fields: [categoryId], references: [id])
   categoryId  Int?
+  @@map("product")
 }
-
 model Order {
   id              Int              @id @default(autoincrement())
   products        ProductOnOrder[]
@@ -59,8 +60,8 @@ model Order {
   amount          Int
   status          String
   currentcy       String
+  @@map("order")
 }
-
 model ProductOnOrder {
   id        Int     @id @default(autoincrement())
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
@@ -69,16 +70,16 @@ model ProductOnOrder {
   orderId   Int
   count     Int
   price     Float
+  @@map("productonorder")
 }
-
 model Category {
   id        Int       @id @default(autoincrement())
   name      String
   products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  @@map("category")
 }
-
 model Cart {
   id          Int             @id @default(autoincrement())
   products    ProductOnCart[]
@@ -87,8 +88,8 @@ model Cart {
   updatedAt   DateTime        @updatedAt
   orderedBy   User            @relation(fields: [orderedById], references: [id])
   orderedById Int
+  @@map("cart")
 }
-
 model ProductOnCart {
   id        Int     @id @default(autoincrement())
   cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
@@ -97,8 +98,8 @@ model ProductOnCart {
   productId Int
   count     Int
   price     Float
+  @@map("productoncart")
 }
-
 model Image {
   id         Int      @id @default(autoincrement())
   asset_id   String
@@ -109,4 +110,5 @@ model Image {
   updatedAt  DateTime @updatedAt
   product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId  Int
+  @@map("image")
 }
