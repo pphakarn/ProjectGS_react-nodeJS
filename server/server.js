@@ -1,8 +1,8 @@
-require('dotenv').config();
+require('dotenv').config(); // อย่าลืมลง npm install dotenv และสร้างไฟล์ .env
 const express = require('express');
-const mysql = require("mysql2/promise");
+const mysql = require("mysql2/promise"); // แนะนำให้ใช้ /promise จะเขียนง่ายกว่า
 const morgan = require('morgan');
-const { readdirSync, existsSync } = require('fs');
+const { readdirSync } = require('fs');
 const cors = require('cors');
 
 const app = express();
@@ -13,53 +13,47 @@ app.use(express.json({ limit: '20mb' }));
 app.use(cors());
 
 // ========== DATABASE CONNECTION ==========
-const dbConfig = {
+// ใช้ createPool และดึงค่าจาก env เป็นหลัก
+const pool = mysql.createPool({
   host: process.env.DB_HOST || "cloud-pj.cliu62ai6o1e.ap-southeast-1.rds.amazonaws.com",
   user: process.env.DB_USER || "admin",
   password: process.env.DB_PASSWORD || "awd486S5",
   database: process.env.DB_NAME || "cloud-pj",
-  port: parseInt(process.env.DB_PORT) || 3306,
+  port: Number(process.env.DB_PORT) || 3306, // Port ควรเป็นตัวเลข
   ssl: { 
-    rejectUnauthorized: false 
+    rejectUnauthorized: false // จำเป็นสำหรับ AWS RDS ในบางกรณี
   },
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
-};
+});
 
-const pool = mysql.createPool(dbConfig);
-
-// ตรวจสอบการเชื่อมต่อ
-(async () => {
+// ตรวจสอบการเชื่อมต่อแบบ Async/Await
+const checkConnection = async () => {
   try {
     const connection = await pool.getConnection();
     console.log("✅ MySQL Pool Connected to AWS RDS!");
     connection.release();
   } catch (err) {
-    console.error("❌ Database Connection Failed:", err.message);
+    console.error("❌ Database Connection Failed:");
+    console.error("Reason:", err.message); // จะบอกชัดเจนว่า Timeout หรือ Access Denied
   }
-})();
+};
+checkConnection();
 
-// Routes - เพิ่มการเช็คว่าโฟลเดอร์มีจริงไหมป้องกัน Error
-const routePath = './routers';
-if (existsSync(routePath)) {
-  readdirSync(routePath).map((c) => {
-    if (c.endsWith('.js')) {
-      app.use('/api', require(`${routePath}/${c}`));
-    }
-  });
-}
-
-app.get("/", (req, res) => {
-  res.send("Backend OK - Server is Alive");
+// Routes
+readdirSync('./routers').map((c) => {
+  if (c.endsWith('.js')) { // ป้องกันไฟล์อื่นที่ไม่ใช่ js
+    app.use('/api', require('./routers/' + c));
+  }
 });
 
-// ========== START SERVER ==========
-// ดึง PORT จาก env ถ้าไม่มีให้ใช้ 5000
-const PORT = process.env.PORT || 5000;
+app.get("/", (req, res) => {
+  res.send("Backend OK");
+});
 
-// สำคัญ: ห้ามใส่ Hostname ของ AWS ลงในนี้ ให้ใช้ 0.0.0.0 หรือไม่ต้องใส่เลย
+const PORT = Number(process.env.PORT) || 5000;
+
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
-  console.log(`📡 Deployment Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`Backend running on port ${PORT}`);
 });
