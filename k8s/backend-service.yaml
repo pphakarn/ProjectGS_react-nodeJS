@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+  name: backend-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: backend
   ports:
-  - port: 3000
-    targetPort: 3000
+    - protocol: TCP
+      port: 80         # พอร์ตหน้าบ้านที่คนใช้งาน (http://.../)
+      targetPort: 5000 # พอร์ตหลังบ้านที่แอปเราเปิดอยู่ (ต้องตรงกับ Code)

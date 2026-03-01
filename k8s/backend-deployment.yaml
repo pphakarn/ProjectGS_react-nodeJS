@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend
 spec:
-  replicas: 1
+  replicas: 2 # เริ่มต้นที่ 2 Pods เพื่อช่วยกระจายโหลด
   selector:
     matchLabels:
       app: backend
@@ -15,5 +15,24 @@ spec:
       containers:
         - name: backend
           image: 207717182806.dkr.ecr.ap-southeast-2.amazonaws.com/cloud-backend:latest
+          imagePullPolicy: Always # บังคับให้ดึง Image ใหม่ทุกครั้งที่ Restart
           ports:
-            - containerPort: 5000 # หรือ port ที่ backend ของคุณใช้
+            - containerPort: 5000
+          env:
+            - name: PORT
+              value: "5000"
+            - name: DB_HOST
+              value: "cloud-pj.cliu62ai6o1e.ap-southeast-1.rds.amazonaws.com"
+            - name: DB_USER
+              value: "admin"
+            - name: DB_PASSWORD
+              value: "awd486S5"
+            - name: DB_NAME
+              value: "cloud-pj"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

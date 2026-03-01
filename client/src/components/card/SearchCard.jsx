@@ -14,6 +14,7 @@ const SearchCard = () => {
 
   const getCategory = useEcomStore((state) => state.getCategory);
   const categories = useEcomStore((state) => state.categories);
+  const safeCategories = Array.isArray(categories) ? categories : [];
 
   const [text, setText] = useState("");
   const [categorySelected, setCategorySelected] = useState([]);
@@ -90,12 +91,16 @@ const SearchCard = () => {
       <div>
         <h1>หมวดหมู่สินค้า</h1>
         <div>
-          {categories.map((item, index) => (
-            <div key={index} className="flex gap-2">
-              <input onChange={handleCheck} value={item.id} type="checkbox" />
-              <label>{item.name}</label>
-            </div>
-          ))}
+          {safeCategories.length > 0 ? (
+            safeCategories.map((item, index) => (
+              <div key={index} className="flex gap-2">
+                <input onChange={handleCheck} value={item.id} type="checkbox" />
+                <label>{item.name}</label>
+              </div>
+            ))
+          ) : (
+            <div className="text-sm text-gray-500">No categories</div>
+          )}
         </div>
       </div>
       <hr />

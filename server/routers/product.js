@@ -12,7 +12,7 @@ const { create,
     removeImage
 } = require('../controllers/product')
 const { authCheck, adminCheck } = require('../middlewares/authCheck')
-// @ENDPOINT http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/product
+// @ENDPOINT http://localhost:5000/api/product
 router.post('/product', create)
 router.get('/products/:count', list)
 router.get('/product/:id', read)

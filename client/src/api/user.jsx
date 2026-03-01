@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const createUserCart = async (token, cart) => {
   // code body
-  return axios.post("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/user/cart", cart, {
+  return axios.post("http://localhost:5000/api/user/cart", cart, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -11,7 +11,7 @@ export const createUserCart = async (token, cart) => {
 
 export const listUserCart = async (token) => {
   // code body
-  return axios.get("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/user/cart", {
+  return axios.get("http://localhost:5000/api/user/cart", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -21,7 +21,7 @@ export const listUserCart = async (token) => {
 export const saveAddress = async (token, address) => {
   // code body
   return axios.post(
-    "http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/user/address",
+    "http://localhost:5000/api/user/address",
     { address },
     {
       headers: {
@@ -33,7 +33,7 @@ export const saveAddress = async (token, address) => {
 
 export const saveOrder = async (token, payload) => {
   // code body
-  return axios.post("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/user/order", payload, {
+  return axios.post("http://localhost:5000/api/user/order", payload, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -42,7 +42,7 @@ export const saveOrder = async (token, payload) => {
 
 export const getOrders = async (token) => {
   // code body
-  return axios.get("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/user/order", {
+  return axios.get("http://localhost:5000/api/user/order", {
     headers: {
       Authorization: `Bearer ${token}`,
     },

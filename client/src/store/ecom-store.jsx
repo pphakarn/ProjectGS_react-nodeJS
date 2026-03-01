@@ -50,7 +50,7 @@ const ecomStore = (set, get) => ({
     }, 0);
   },
   actionLogin: async (form) => {
-    const res = await axios.post("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/login", form);
+    const res = await axios.post("http://localhost:5000/api/login", form);
     set({
       user: res.data.payload,
       token: res.data.token,

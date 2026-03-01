@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const createProduct = async (token, form) => {
   // code body
-  return axios.post("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/product", form, {
+  return axios.post("http://localhost:5000/api/product", form, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -11,12 +11,12 @@ export const createProduct = async (token, form) => {
 
 export const listProduct = async (count = 20) => {
   // code body
-  return axios.get("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/products/" + count);
+  return axios.get("http://localhost:5000/api/products/" + count);
 };
 
 export const readProduct = async (token, id) => {
   // code body
-  return axios.get("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/product/" + id, {
+  return axios.get("http://localhost:5000/api/product/" + id, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -24,7 +24,7 @@ export const readProduct = async (token, id) => {
 };
 export const deleteProduct = async (token, id) => {
   // code body
-  return axios.delete("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/product/" + id, {
+  return axios.delete("http://localhost:5000/api/product/" + id, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -32,7 +32,7 @@ export const deleteProduct = async (token, id) => {
 };
 export const updateProduct = async (token, id, form) => {
   // code body
-  return axios.put("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/product/" + id, form, {
+  return axios.put("http://localhost:5000/api/product/" + id, form, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -43,7 +43,7 @@ export const uploadFiles = async (token, form) => {
   // code
   // console.log('form api frontent', form)
   return axios.post(
-    "http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/images",
+    "http://localhost:5000/api/images",
     {
       image: form,
     },
@@ -59,7 +59,7 @@ export const removeFiles = async (token, public_id) => {
   // code
   // console.log('form api frontent', form)
   return axios.post(
-    "http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/removeimages",
+    "http://localhost:5000/api/removeimages",
     {
       public_id,
     },
@@ -73,12 +73,12 @@ export const removeFiles = async (token, public_id) => {
 
 export const searchFilters = async (arg) => {
   // code body
-  return axios.post("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/search/filters", arg);
+  return axios.post("http://localhost:5000/api/search/filters", arg);
 };
 
 export const listProductBy = async (sort, order, limit) => {
   // code body
-  return axios.post("http://a6033c0c47b864a2da8be7492fcf8988-86221655358c006a.elb.ap-southeast-1.amazonaws.com/api/productby", {
+  return axios.post("http://localhost:5000/api/productby", {
     sort,
     order,
     limit,
